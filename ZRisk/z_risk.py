@@ -247,159 +247,165 @@ class ZRisk:
 
     def sracunaj(self):
 
-        
-        ##--Povredljivost u dic--#
+        if not len(QgsMapLayerRegistry.instance().mapLayers())==0:
 
-        self.dicPovredljivost={}
-        for field in self.povredljivost.pendingFields():
-            vrednosti=[]
+
+            ##--Povredljivost u dic--#
+
+            self.dicPovredljivost={}
+            for field in self.povredljivost.pendingFields():
+                vrednosti=[]
         
-            for featureP in self.povredljivost.getFeatures():
+                for featureP in self.povredljivost.getFeatures():
             
-                vrednost=featureP.attribute(field.name())
-                vrednosti+=[vrednost]
-            #print vrednosti
-            self.dicPovredljivost[field.name()]=vrednosti
+                    vrednost=featureP.attribute(field.name())
+                    vrednosti+=[vrednost]
+                #print vrednosti
+                self.dicPovredljivost[field.name()]=vrednosti
 
-        ##--Zaobilazenje Unije
+            ##--Zaobilazenje Unije
 
-        self.zgrade.startEditing()
-        for feature in self.zgrade.getFeatures():
+            self.zgrade.startEditing()
+            for feature in self.zgrade.getFeatures():
      
-            for feat in self.hazard.getFeatures():
-                if type(feature[self.zPGA]) is type(NULL):
-                    if feature.geometry().within(feat.geometry()) or feature.geometry().overlaps(feat.geometry()) :
-                        feature[self.zPGA]=float(feat[self.hPGA])
-                        self.zgrade.updateFeature(feature)
+                for feat in self.hazard.getFeatures():
+                    if type(feature[self.zPGA]) is type(NULL):
+                        if feature.geometry().within(feat.geometry()) or feature.geometry().overlaps(feat.geometry()) :
+                            feature[self.zPGA]=float(feat[self.hPGA])
+                            self.zgrade.updateFeature(feature)
+                    else:
+                        break
+            self.zgrade.commitChanges()
+        
+            ##--Pronalazenje PGA za krivu povredljivosti i krivu ostecenja--##
+
+            count = int(self.zgrade.featureCount()) #progress bar inicijalizacija
+            i=0 #progress bar brojac
+            self.zgrade.startEditing()
+
+            for feature in self.zgrade.getFeatures():
+                brojStanara=feature.attribute(self.stanari)
+                keyP=feature.attribute(self.kpovred) #test1
+                keyH=feature.attribute(self.kljudi)
+                #progress bar
+                self.pb(i,count)
+                i=i+1
+                #
+                keyAp='a'+keyP[-1] #t1
+                keyAh='a'+keyH[-1]
+
+                #print keyH
+                #print 'a'+keyH[-1]
+                pga=float(feature.attribute(self.zPGA))
+
+                krivaP=self.dicPovredljivost[keyP] #t1
+                krivaH=self.dicPovredljivost[keyH]
+
+                krivaAp=self.dicPovredljivost[keyAp] #t1
+                krivaAh=self.dicPovredljivost[keyAh]
+
+    
+                minIndex1h=NULL
+                minIndex2h=NULL
+    
+                minIndex1p=NULL
+                minIndex2p=NULL
+
+                if pga in krivaAh:
+                    indexH=krivaAh.index(pga)
+                    valueH=krivaH[indexH]
+                    valueAh=krivaAh[indexH]
+
+                    feature[self.ljudi] = valueH*brojStanara
+                    self.zgrade.updateFeature(feature)
+        
                 else:
-                    break
-        self.zgrade.commitChanges()
-        
-        ##--Pronalazenje PGA za krivu povredljivosti i krivu ostecenja--##
-
-        count = int(self.zgrade.featureCount()) #progress bar inicijalizacija
-        i=0 #progress bar brojac
-        self.zgrade.startEditing()
-
-        for feature in self.zgrade.getFeatures():
-            brojStanara=feature.attribute(self.stanari)
-            keyP=feature.attribute(self.kpovred) #test1
-            keyH=feature.attribute(self.kljudi)
-            #progress bar
-            self.pb(i,count)
-            i=i+1
-            #
-            keyAp='a'+keyP[-1] #t1
-            keyAh='a'+keyH[-1]
-
-            #print keyH
-            #print 'a'+keyH[-1]
-            pga=float(feature.attribute(self.zPGA))
-
-            krivaP=self.dicPovredljivost[keyP] #t1
-            krivaH=self.dicPovredljivost[keyH]
-
-            krivaAp=self.dicPovredljivost[keyAp] #t1
-            krivaAh=self.dicPovredljivost[keyAh]
-
-    
-            minIndex1h=NULL
-            minIndex2h=NULL
-    
-            minIndex1p=NULL
-            minIndex2p=NULL
-
-            if pga in krivaAh:
-                indexH=krivaAh.index(pga)
-                valueH=krivaH[indexH]
-                valueAh=krivaAh[indexH]
-
-                feature[self.ljudi] = valueH*brojStanara
-                self.zgrade.updateFeature(feature)
-        
-            else:
-                #print 'nema'
-                minIndex1h=min(range(len(krivaAh)), key=lambda i: abs(krivaAh[i]-pga))
-                if pga>krivaAh[minIndex1h]:
-                    minIndex2h=minIndex1h+1
+                    #print 'nema'
+                    minIndex1h=min(range(len(krivaAh)), key=lambda i: abs(krivaAh[i]-pga))
+                    if pga>krivaAh[minIndex1h]:
+                        minIndex2h=minIndex1h+1
             
             
-                else:
-                    minIndex2h=minIndex1h
-                    minIndex1h=minIndex2h-1 
-                ##--Interpolacija##
-        
-                #princip slicnosti u pravouglom trouglu 
-                #odsecak hx nalazi se na stranici h
-                #odsecak ax nalazi se na stranici a
-                #iz slicnosti sledi
-                # a:ax=h:hx
-                # hx=ax*h/a
-                #ljudi=valueH1+px
-    
-                valueA2h=krivaAh[minIndex2h]
-                valueA1h=krivaAh[minIndex1h]
-                valueH2=krivaH[minIndex2h]
-                valueH1=krivaH[minIndex1h]
-                a=valueA2h-valueA1h
-                h=valueH2-valueH1
-                ax=pga-valueA1h
-                hx=ax*h/a
-                ljud=valueH1+hx
-    
-                #print ljudi
-                feature[self.ljudi] = ljud*brojStanara
-                self.zgrade.updateFeature(feature)
-
-            if pga in krivaAp:
-                indexP=krivaAp.index(pga)
-                valueP=krivaP[indexP]
-                valueA=krivaAp[indexP]
-        
-                #zapis u polje
-                feature[self.ostecenje] = valueP*100
-                self.zgrade.updateFeature(feature)
-            else:
-                minIndex1p=min(range(len(krivaAp)), key=lambda i: abs(krivaAp[i]-pga))
-        
-                if pga>krivaAp[minIndex1p]:
-                    minIndex2p=minIndex1p+1
-                else:
-                    minIndex2p=minIndex1p
-                    minIndex1p=minIndex2p-1
-            
-
-        
+                    else:
+                        minIndex2h=minIndex1h
+                        minIndex1h=minIndex2h-1 
                     ##--Interpolacija##
         
                     #princip slicnosti u pravouglom trouglu 
-                    #odsecak px nalazi se na stranici p
+                    #odsecak hx nalazi se na stranici h
                     #odsecak ax nalazi se na stranici a
                     #iz slicnosti sledi
-                    # a:ax=p:px
-                    # px=ax*p/a
-                    #ostecenje=valueP1+px
-        
-                    valueA2p=krivaAp[minIndex2p]
-                    valueA1p=krivaAp[minIndex1p]
-                    valueP2=krivaP[minIndex2p]
-                    valueP1=krivaP[minIndex1p]
-        
-                    a=valueA2p-valueA1p
-                    p=valueP2-valueP1
-                    ax=pga-valueA1p
-                    px=ax*p/a
-                    ost=valueP1+px
+                    # a:ax=h:hx
+                    # hx=ax*h/a
+                    #ljudi=valueH1+px
     
-                    #zapis u polje
-                    feature[self.ostecenje] = ost*100
-                    #feature['ostecenje'] = 1.1111111
+                    valueA2h=krivaAh[minIndex2h]
+                    valueA1h=krivaAh[minIndex1h]
+                    valueH2=krivaH[minIndex2h]
+                    valueH1=krivaH[minIndex1h]
+                    a=valueA2h-valueA1h
+                    h=valueH2-valueH1
+                    ax=pga-valueA1h
+                    hx=ax*h/a
+                    ljud=valueH1+hx
+    
+                    #print ljudi
+                    feature[self.ljudi] = ljud*brojStanara
                     self.zgrade.updateFeature(feature)
-                pass
-        self.zgrade.commitChanges()
 
-        QMessageBox.information( self.iface.mainWindow(),"Info", "Procena zemljotresnog rizika uspesno je sracunata.")
-        self.close()
+                if pga in krivaAp:
+                    indexP=krivaAp.index(pga)
+                    valueP=krivaP[indexP]
+                    valueA=krivaAp[indexP]
+        
+                    #zapis u polje
+                    feature[self.ostecenje] = valueP*100
+                    self.zgrade.updateFeature(feature)
+                else:
+                    minIndex1p=min(range(len(krivaAp)), key=lambda i: abs(krivaAp[i]-pga))
+        
+                    if pga>krivaAp[minIndex1p]:
+                        minIndex2p=minIndex1p+1
+                    else:
+                        minIndex2p=minIndex1p
+                        minIndex1p=minIndex2p-1
+            
+
+        
+                        ##--Interpolacija##
+                        
+                        #princip slicnosti u pravouglom trouglu 
+                        #odsecak px nalazi se na stranici p
+                        #odsecak ax nalazi se na stranici a
+                        #iz slicnosti sledi
+                        # a:ax=p:px
+                        # px=ax*p/a
+                        #ostecenje=valueP1+px
+                        
+                        valueA2p=krivaAp[minIndex2p]
+                        valueA1p=krivaAp[minIndex1p]
+                        valueP2=krivaP[minIndex2p]
+                        valueP1=krivaP[minIndex1p]
+            
+                        a=valueA2p-valueA1p
+                        p=valueP2-valueP1
+                        ax=pga-valueA1p
+                        px=ax*p/a
+                        ost=valueP1+px
+            
+                        #zapis u polje
+                        feature[self.ostecenje] = ost*100
+                        #feature['ostecenje'] = 1.1111111
+                        self.zgrade.updateFeature(feature)
+                    pass
+            self.zgrade.commitChanges()
+                    
+
+            QMessageBox.information( self.iface.mainWindow(),"Info", "Procena zemljotresnog rizika uspesno je sracunata.")
+            self.close()
+        else:
+            QtGui.QMessageBox.critical(None, "Error", 'Trenutno ne postoji ni jedan ucitan lejer!')
+            return
 
     def close(self):
         self.dlg.close() 
