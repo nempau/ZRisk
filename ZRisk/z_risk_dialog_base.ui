@@ -6,29 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
-    <height>498</height>
+    <width>465</width>
+    <height>496</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>465</width>
+    <height>496</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>465</width>
+    <height>496</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>ZRisk</string>
   </property>
-  <widget class="QDialogButtonBox" name="button_box">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>450</y>
-     <width>181</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxHPGA">
    <property name="geometry">
     <rect>
@@ -103,7 +105,7 @@
     <rect>
      <x>10</x>
      <y>210</y>
-     <width>160</width>
+     <width>161</width>
      <height>33</height>
     </rect>
    </property>
@@ -113,12 +115,12 @@
     <rect>
      <x>10</x>
      <y>190</y>
-     <width>161</width>
+     <width>241</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi lejer sa zgradama:</string>
+    <string>Izaberi lejer sa funkcijama povredljivosti:</string>
    </property>
   </widget>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxZPGA">
@@ -136,7 +138,7 @@
     <rect>
      <x>10</x>
      <y>70</y>
-     <width>431</width>
+     <width>441</width>
      <height>16</height>
     </rect>
    </property>
@@ -149,7 +151,7 @@
     <rect>
      <x>20</x>
      <y>170</y>
-     <width>421</width>
+     <width>431</width>
      <height>16</height>
     </rect>
    </property>
@@ -221,7 +223,7 @@
     <rect>
      <x>10</x>
      <y>430</y>
-     <width>431</width>
+     <width>441</width>
      <height>16</height>
     </rect>
    </property>
@@ -249,7 +251,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje sa Stanarima:</string>
+    <string>Izaberi polje sa stanarima:</string>
    </property>
   </widget>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxKljudi">
@@ -298,6 +300,45 @@
     <string>Izaberi polje sa krivom povredljivosti:</string>
    </property>
   </widget>
+  <widget class="QProgressBar" name="progressBar">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>460</y>
+     <width>161</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOdustani">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>450</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Odustani</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOK">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>450</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -312,38 +353,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>button_box</sender>
-   <signal>accepted()</signal>
-   <receiver>ZRiskDialogBase</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>button_box</sender>
-   <signal>rejected()</signal>
-   <receiver>ZRiskDialogBase</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

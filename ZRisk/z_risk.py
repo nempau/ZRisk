@@ -35,7 +35,7 @@ from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QVariant
 from PyQt4.QtGui import QApplication
 from PyQt4.QtCore import QObject
-from PyQt4.QtGui import QDialogButtonBox, QDialog, QMessageBox
+from PyQt4.QtGui import QDialogButtonBox, QDialog, QMessageBox, QPushButton
 import time
 
 
@@ -274,13 +274,21 @@ class ZRisk:
                 else:
                     break
         self.zgrade.commitChanges()
+        
         ##--Pronalazenje PGA za krivu povredljivosti i krivu ostecenja--##
+
+        count = int(self.zgrade.featureCount()) #progress bar inicijalizacija
+        i=0 #progress bar brojac
         self.zgrade.startEditing()
+
         for feature in self.zgrade.getFeatures():
             brojStanara=feature.attribute(self.stanari)
             keyP=feature.attribute(self.kpovred) #test1
             keyH=feature.attribute(self.kljudi)
-
+            #progress bar
+            self.pb(i,count)
+            i=i+1
+            #
             keyAp='a'+keyP[-1] #t1
             keyAh='a'+keyH[-1]
 
@@ -389,10 +397,19 @@ class ZRisk:
                     self.zgrade.updateFeature(feature)
                 pass
         self.zgrade.commitChanges()
+
+        QMessageBox.information( self.iface.mainWindow(),"Info", "Procena zemljotresnog rizika uspesno je sracunata.")
         self.close()
-        QMessageBox.information( self.iface.mainWindow(),"Info", "Vrednost parcela je uspesno sracunata.")
+
     def close(self):
-        self.dlg.close()                          
+        self.dlg.close() 
+
+    #definisanje progress bara
+    def pb(self,i,count):
+        progress=self.dlg.progressBar
+        progress.setMaximum(100)
+        percent = (i/float(count)) * 100
+        progress.setValue(percent)                         
         
     def run(self):
         """Run method that performs all the real work"""
@@ -430,22 +447,9 @@ class ZRisk:
         QObject.connect(self.dlg.mFieldComboBoxStanari, QtCore.SIGNAL("fieldChanged(const QString &)"), self.fieldChanged)
         QObject.connect(self.dlg.mFieldComboBoxKljudi, QtCore.SIGNAL("fieldChanged(const QString &)"), self.fieldChanged)
         QObject.connect(self.dlg.mFieldComboBoxKpovred, QtCore.SIGNAL("fieldChanged(const QString &)"), self.fieldChanged)
-        QObject.connect(self.dlg.button_box.button(QDialogButtonBox.Ok), QtCore.SIGNAL('clicked()'), self.sracunaj)
-        # Fill vector layers combobox
-        
-        
-        
-
-
-    
-
-
-
-
-          
-
-       
-
+        #QObject.connect(self.dlg.button_box.button(QDialogButtonBox.Ok), QtCore.SIGNAL('clicked()'), self.sracunaj)
+        QObject.connect(self.dlg.pushButtonOK, QtCore.SIGNAL('clicked()'), self.sracunaj)
+        QObject.connect(self.dlg.pushButtonOdustani, QtCore.SIGNAL('clicked()'), self.close)
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
