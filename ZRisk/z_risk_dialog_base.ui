@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>465</width>
+    <width>368</width>
     <height>496</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>465</width>
-    <height>496</height>
+    <width>200</width>
+    <height>200</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -34,7 +34,7 @@
   <widget class="QgsFieldComboBox" name="mFieldComboBoxHPGA">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>210</x>
      <y>30</y>
      <width>111</width>
      <height>33</height>
@@ -61,20 +61,20 @@
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi lejer sa hazardima:</string>
+    <string>lejer sa hazardima:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_h_PGA">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>210</x>
      <y>10</y>
      <width>111</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje PGA:</string>
+    <string>polje PGA:</string>
    </property>
   </widget>
   <widget class="QgsMapLayerComboBox" name="mMapLayerComboBoxPovredljivost">
@@ -92,12 +92,12 @@
     <rect>
      <x>10</x>
      <y>100</y>
-     <width>221</width>
+     <width>251</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi CSV lejer sa povredljivostima:</string>
+    <string>lejer sa funkcijama povredljivosti:</string>
    </property>
   </widget>
   <widget class="QgsMapLayerComboBox" name="mMapLayerComboBoxZgrade">
@@ -115,18 +115,18 @@
     <rect>
      <x>10</x>
      <y>190</y>
-     <width>241</width>
+     <width>161</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi lejer sa funkcijama povredljivosti:</string>
+    <string>lejer sa zgradama:</string>
    </property>
   </widget>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxZPGA">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>210</x>
      <y>270</y>
      <width>111</width>
      <height>33</height>
@@ -138,7 +138,7 @@
     <rect>
      <x>10</x>
      <y>70</y>
-     <width>441</width>
+     <width>341</width>
      <height>16</height>
     </rect>
    </property>
@@ -151,7 +151,7 @@
     <rect>
      <x>20</x>
      <y>170</y>
-     <width>431</width>
+     <width>331</width>
      <height>16</height>
     </rect>
    </property>
@@ -162,8 +162,8 @@
   <widget class="QgsFieldComboBox" name="mFieldComboBoxOstecenje">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>330</y>
+     <x>210</x>
+     <y>390</y>
      <width>111</width>
      <height>33</height>
     </rect>
@@ -172,8 +172,8 @@
   <widget class="QgsFieldComboBox" name="mFieldComboBoxLJudi">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>390</y>
+     <x>210</x>
+     <y>330</y>
      <width>111</width>
      <height>33</height>
     </rect>
@@ -182,40 +182,40 @@
   <widget class="QLabel" name="label_z_PGA">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>210</x>
      <y>250</y>
      <width>161</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje za upis PGA:</string>
+    <string>polje za upis PGA:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_z_ostecenje">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>310</y>
-     <width>181</width>
+     <x>210</x>
+     <y>370</y>
+     <width>131</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje za upis ostecenja:</string>
+    <string>polje za upis ostecenja:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_z_ljudi">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>370</y>
-     <width>191</width>
+     <x>210</x>
+     <y>310</y>
+     <width>151</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje za upis gubitka ljudi:</string>
+    <string>polje za upis gubitka ljudi:</string>
    </property>
   </widget>
   <widget class="Line" name="line_3">
@@ -223,7 +223,7 @@
     <rect>
      <x>10</x>
      <y>430</y>
-     <width>441</width>
+     <width>341</width>
      <height>16</height>
     </rect>
    </property>
@@ -246,12 +246,12 @@
     <rect>
      <x>10</x>
      <y>250</y>
-     <width>161</width>
+     <width>81</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje sa stanarima:</string>
+    <string>broj stanara:</string>
    </property>
   </widget>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxKljudi">
@@ -284,7 +284,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje sa krivom ljudi:</string>
+    <string>povredljivost - ljudi:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_z_krivaPovredljivosti">
@@ -292,12 +292,12 @@
     <rect>
      <x>10</x>
      <y>370</y>
-     <width>211</width>
+     <width>131</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Izaberi polje sa krivom povredljivosti:</string>
+    <string>povredljivost -zgrade:</string>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">
@@ -316,7 +316,7 @@
   <widget class="QPushButton" name="pushButtonOdustani">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>200</x>
      <y>450</y>
      <width>71</width>
      <height>31</height>
@@ -329,7 +329,7 @@
   <widget class="QPushButton" name="pushButtonOK">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>280</x>
      <y>450</y>
      <width>71</width>
      <height>31</height>

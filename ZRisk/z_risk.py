@@ -258,7 +258,7 @@ class ZRisk:
         
                 for featureP in self.povredljivost.getFeatures():
             
-                    vrednost=featureP.attribute(field.name())
+                    vrednost=float(featureP.attribute(field.name()))
                     vrednosti+=[vrednost]
                 #print vrednosti
                 self.dicPovredljivost[field.name()]=vrednosti
@@ -297,6 +297,7 @@ class ZRisk:
                 #print keyH
                 #print 'a'+keyH[-1]
                 pga=float(feature.attribute(self.zPGA))
+                #QtGui.QMessageBox.critical(None, "Error", str(type(pga)))
 
                 krivaP=self.dicPovredljivost[keyP] #t1
                 krivaH=self.dicPovredljivost[keyH]
@@ -304,7 +305,6 @@ class ZRisk:
                 krivaAp=self.dicPovredljivost[keyAp] #t1
                 krivaAh=self.dicPovredljivost[keyAh]
 
-    
                 minIndex1h=NULL
                 minIndex2h=NULL
     
@@ -400,8 +400,9 @@ class ZRisk:
                     pass
             self.zgrade.commitChanges()
                     
-
+            
             QMessageBox.information( self.iface.mainWindow(),"Info", "Procena zemljotresnog rizika uspesno je sracunata.")
+            self.pb(0,count)
             self.close()
         else:
             QtGui.QMessageBox.critical(None, "Error", 'Trenutno ne postoji ni jedan ucitan lejer!')
@@ -420,7 +421,6 @@ class ZRisk:
     def run(self):
         """Run method that performs all the real work"""
 
-        self.start_time = time.time()
 
         self.hazard=self.dlg.mMapLayerComboBoxHazard.currentLayer() 
         self.povredljivost=self.dlg.mMapLayerComboBoxPovredljivost.currentLayer() 
