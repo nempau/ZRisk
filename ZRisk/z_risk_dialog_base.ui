@@ -2,28 +2,43 @@
 <ui version="4.0">
  <class>ZRiskDialogBase</class>
  <widget class="QDialog" name="ZRiskDialogBase">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>368</width>
-    <height>496</height>
+    <width>360</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
-    <height>200</height>
+    <width>360</width>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>465</width>
-    <height>496</height>
+    <width>360</width>
+    <height>500</height>
    </size>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>ZRisk</string>
+  </property>
+  <property name="locale">
+   <locale language="Serbian" country="Serbia"/>
+  </property>
+  <property name="inputMethodHints">
+   <set>Qt::ImhNone</set>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -42,6 +57,9 @@
    </property>
   </widget>
   <widget class="QgsMapLayerComboBox" name="mMapLayerComboBoxHazard">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -49,6 +67,9 @@
      <width>160</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="editable">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_lay_hazard">
@@ -61,7 +82,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>lejer sa hazardima:</string>
+    <string>Lejer sa hazardima:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_h_PGA">
@@ -74,14 +95,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>polje PGA:</string>
+    <string>Polje PGA:</string>
    </property>
   </widget>
   <widget class="QgsMapLayerComboBox" name="mMapLayerComboBoxPovredljivost">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>120</y>
+     <y>130</y>
      <width>160</width>
      <height>33</height>
     </rect>
@@ -91,13 +112,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
+     <y>110</y>
      <width>251</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>lejer sa funkcijama povredljivosti:</string>
+    <string>Lejer sa funkcijama povredljivosti:</string>
    </property>
   </widget>
   <widget class="QgsMapLayerComboBox" name="mMapLayerComboBoxZgrade">
@@ -120,7 +141,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>lejer sa zgradama:</string>
+    <string>Lejer sa zgradama:</string>
    </property>
   </widget>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxZPGA">
@@ -137,7 +158,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>90</y>
      <width>341</width>
      <height>16</height>
     </rect>
@@ -189,7 +210,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>polje za upis PGA:</string>
+    <string>Polje za upis PGA:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_z_ostecenje">
@@ -202,7 +223,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>polje za upis ostecenja:</string>
+    <string>Polje za upis ostecenja:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_z_ljudi">
@@ -215,7 +236,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>polje za upis gubitka ljudi:</string>
+    <string>Polje za upis gubitka ljudi:</string>
    </property>
   </widget>
   <widget class="Line" name="line_3">
@@ -251,7 +272,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>broj stanara:</string>
+    <string>Broj stanara:</string>
    </property>
   </widget>
   <widget class="QgsFieldComboBox" name="mFieldComboBoxKljudi">
@@ -284,7 +305,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>povredljivost - ljudi:</string>
+    <string>Povredljivost - ljudi:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_z_krivaPovredljivosti">
@@ -297,7 +318,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>povredljivost -zgrade:</string>
+    <string>Povredljivost -zgrade:</string>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">
@@ -339,6 +360,28 @@
     <string>OK</string>
    </property>
   </widget>
+  <widget class="QRadioButton" name="radioButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>321</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Vrednost PGA vec postoji u lejeru sa zgradama</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -352,6 +395,54 @@
    <header>qgsmaplayercombobox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>mMapLayerComboBoxHazard</tabstop>
+  <tabstop>mFieldComboBoxHPGA</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>mMapLayerComboBoxPovredljivost</tabstop>
+  <tabstop>mMapLayerComboBoxZgrade</tabstop>
+  <tabstop>mFieldComboBoxStanari</tabstop>
+  <tabstop>mFieldComboBoxKljudi</tabstop>
+  <tabstop>mFieldComboBoxKpovred</tabstop>
+  <tabstop>mFieldComboBoxZPGA</tabstop>
+  <tabstop>mFieldComboBoxLJudi</tabstop>
+  <tabstop>mFieldComboBoxOstecenje</tabstop>
+  <tabstop>pushButtonOdustani</tabstop>
+  <tabstop>pushButtonOK</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>mFieldComboBoxHPGA</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>265</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>mMapLayerComboBoxHazard</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
