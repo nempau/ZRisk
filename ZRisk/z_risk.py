@@ -30,6 +30,7 @@ from z_risk_dialog import ZRiskDialog
 import os.path
 from qgis.core import *
 from qgis.core import QgsMapLayerRegistry
+from qgis.gui import QgsFieldProxyModel, QgsMapLayerProxyModel
 import time
 
 
@@ -468,9 +469,22 @@ class ZRisk:
         #QgsMessageLog.logMessage('pokrenuo sam se')
         """Run method that performs all the real work"""
         
+        #Setovanje filtera za lejere:
+        self.dlg.mMapLayerComboBoxHazard.setFilters(QgsMapLayerProxyModel.PolygonLayer)
+        self.dlg.mMapLayerComboBoxPovredljivost.setFilters(QgsMapLayerProxyModel.NoGeometry)
+        self.dlg.mMapLayerComboBoxZgrade.setFilters(QgsMapLayerProxyModel.PolygonLayer)
+
+        #Setovanje filtera za atribute lejera:
+        self.dlg.mFieldComboBoxHPGA.setFilters(QgsFieldProxyModel.Numeric)
+        self.dlg.mFieldComboBoxZPGA.setFilters(QgsFieldProxyModel.Numeric)
+        self.dlg.mFieldComboBoxOstecenje.setFilters(QgsFieldProxyModel.Numeric)
+        self.dlg.mFieldComboBoxLJudi.setFilters(QgsFieldProxyModel.Numeric)
+        self.dlg.mFieldComboBoxStanari.setFilters(QgsFieldProxyModel.Numeric)
+        self.dlg.mFieldComboBoxKljudi.setFilters(QgsFieldProxyModel.String)
+        self.dlg.mFieldComboBoxKpovred.setFilters(QgsFieldProxyModel.String)
         #Inicijalno popunjavanje lejera
-        self.hazard=self.dlg.mMapLayerComboBoxHazard.currentLayer() 
-        self.povredljivost=self.dlg.mMapLayerComboBoxPovredljivost.currentLayer() 
+        self.hazard=self.dlg.mMapLayerComboBoxHazard.currentLayer()
+        self.povredljivost=self.dlg.mMapLayerComboBoxPovredljivost.currentLayer()  
         self.zgrade=self.dlg.mMapLayerComboBoxZgrade.currentLayer() 
         
         #Prikazivanje atributa inicijalnih lejera
