@@ -31,7 +31,7 @@ import os.path
 from qgis.core import *
 from qgis.core import QgsMapLayerRegistry
 from qgis.gui import QgsFieldProxyModel, QgsMapLayerProxyModel
-import time
+import time, math
 
 
 class ZRisk:
@@ -354,7 +354,7 @@ class ZRisk:
                 indexH=krivaAh.index(pga)
                 valueH=krivaH[indexH]
                 valueAh=krivaAh[indexH]
-                feature[self.ljudi] = valueH*brojStanara #tablicnu vrednost pomnozenu brojem stanra
+                feature[self.ljudi] = math.ceil(valueH*brojStanara) #tablicnu vrednost pomnozenu brojem stanra
                 self.zgrade.updateFeature(feature)#upisuje u polje za gubitak ljudi 
                 
             else:
@@ -389,7 +389,7 @@ class ZRisk:
                 hx=ax*h/a
                 ljud=valueH1+hx #interpolovana vrednost krive povredljivosti za ljude
     
-                feature[self.ljudi] = ljud*brojStanara #interpolovanu vrednost mnozi brojem stanara
+                feature[self.ljudi] = math.ceil(ljud*brojStanara) #interpolovanu vrednost mnozi brojem stanara
                 self.zgrade.updateFeature(feature) # izvrsava upisivanje u lejer
 
             # proverava da li se pga vrednost nalazi u tablicnim vrednostima krive Ap
@@ -400,7 +400,7 @@ class ZRisk:
                 valueA=krivaAp[indexP]
         
                 #zapis u polje
-                feature[self.ostecenje] = valueP*100 #tablicnu vrednost pretvara u procente
+                feature[self.ostecenje] = math.ceil(valueP*100) #tablicnu vrednost pretvara u procente
                 #feature[self.ostecenje] = 111
                 self.zgrade.updateFeature(feature) # izvrsava upisivanje u lejer
             else:
@@ -436,7 +436,7 @@ class ZRisk:
                 ost=valueP1+px #interpolovana vrednost krive povredljivosti za zgrade
                 
                 #zapis u polje
-                feature[self.ostecenje] = ost*100 #interpolovanu vrednost pretvara u procente
+                feature[self.ostecenje] = math.ceil(ost*100) #interpolovanu vrednost pretvara u procente
                 #feature[self.ostecenje] = 999
                 self.zgrade.updateFeature(feature) #izvrsava upisivanje u lejer  
         
@@ -447,7 +447,7 @@ class ZRisk:
         self.close()
         #Dijalog obavestenje da su vrednosti ostecenja zgrada i gubitka ljudi uspesno sracunati
         QMessageBox.information( self.iface.mainWindow(),"Info", 
-                                "Vrednosti ostecenja i gubitka ljudi uspesno su sracunate.")
+                                "Vrednosti ostecenja zgrada i gubitka ljudi uspesno su sracunate.")
           
     #Metod za zatvaranje dijaloga plugina     
     def close(self):
