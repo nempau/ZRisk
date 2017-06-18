@@ -13,8 +13,7 @@ Zatim slede podaci za krivu 2 a2,p2,h2 itd. U lejeru u kojem su definisani objek
 
 Category: Vector 
 Tags: seismology 
-More info: homepage   bug_tracker   code_repository
 
 Author: Dejan Dragojević, Nemanja Paunić
 
-Installed version: 0.1 (in /home/nemanja/.qgis2/python/plugins/ZRisk)
+version: 0.1
